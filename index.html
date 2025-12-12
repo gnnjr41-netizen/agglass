@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AG Glass — Solusi Kaca & Aluminium Premium | Jasa Profesional</title>
+    <meta name="description" content="AG Glass menyediakan jasa kaca & aluminium profesional: pemasangan kaca tempered, kusen aluminium, kanopi, partisi kantor, dan service. Garansi rapi & cepat." />
+    <meta name="keywords" content="kaca tempered, aluminium, kusen aluminium, pemasangan kaca, kanopi kaca, partisi kantor, AG Glass" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <style>
+        /* Gallery Carousel Styles */
+        .gallery-scroll-container {
+            position: relative;
+            margin: 40px 0 20px 0;
+        }
+        
+        .gallery-scroll-wrapper {
+            position: relative;
+        }
+        
+        .gallery-scroll {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 10px 5px 30px 5px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .gallery-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .gallery-item-scroll {
+            flex: 0 0 auto;
+            width: 320px;
+            height: 320px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            background: linear-gradient(135deg, #f0f4ff, #e6eeff);
+        }
+        
+        .gallery-item-scroll:hover {
+            transform: translateY(-5px);
+        }
+        
+        .gallery-img-scroll {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item-scroll:hover .gallery-img-scroll {
+            transform: scale(1.05);
+        }
+        
+        .gallery-overlay-scroll {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item-scroll:hover .gallery-overlay-scroll {
+            transform: translateY(0);
+        }
+        
+        /* Navigation Buttons */
+        .scroll-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            transition: all 0.3s ease;
+            font-size: 24px;
+            color: var(--secondary);
+        }
+        
+        .scroll-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .scroll-btn.prev {
+            left: -25px;
+        }
+        
+        .scroll-btn.next {
+            right: -25px;
+        }
+        
+        .scroll-btn.hidden {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+        
+        .scroll-btn.hidden:hover {
+            background: white;
+            color: var(--secondary);
+            transform: translateY(-50%);
+        }
+        
+        .scroll-indicator {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .scroll-indicator span {
+            display: inline-block;
+            margin: 0 5px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10px); }
+        }
+        
+        /* Portfolio counter */
+        .portfolio-counter {
+            text-align: center;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .counter-number {
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        /* View All Button */
+        .view-all-btn {
+            display: block;
+            margin: 30px auto 0 auto;
+            padding: 12px 30px;
+            background: white;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: fit-content;
+        }
+        
+        .view-all-btn:hover {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* ============================================
+           AREA LAYANAN - 8 KOLOM KECIL (CSS Baru)
+           ============================================ */
+        
+        .coverage-grid-8 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .coverage-card-8 {
+            background: white;
+            border-radius: 10px;
+            padding: 20px 15px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .coverage-card-8:hover {
+            transform: translateY(-3px);
+            border-color: var(--secondary);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .coverage-card-8.highlight-area {
+            background: linear-gradient(135deg, #0b1226, #2563eb);
+            color: white;
+            border: none;
+        }
+        
+        .coverage-card-8.highlight-area h3,
+        .coverage-card-8.highlight-area p,
+        .coverage-card-8.highlight-area li {
+            color: white;
+        }
+        
+        .coverage-card-8 .icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .coverage-card-8 h3 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        
+        .coverage-card-8 p {
+            color: var(--muted);
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+        
+        .coverage-card-8 p strong {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+        
+        .coverage-card-8.highlight-area p strong {
+            color: white;
+        }
+        
+        .area-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 15px 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .area-list li {
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            color: var(--dark);
+            font-size: 0.8rem;
+        }
+        
+        .coverage-card-8.highlight-area .area-list li {
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .area-list li.dll {
+            color: var(--secondary);
+            font-style: italic;
+            font-weight: 600;
+        }
+        
+        .consult-btn {
+            background: white;
+            color: var(--secondary);
+            border: none;
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            font-size: 0.8rem;
+            width: 100%;
+        }
+        
+        .consult-btn:hover {
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+        
+        /* Responsive untuk 8 kolom kecil */
+        @media (min-width: 1200px) {
+            .coverage-grid-8 {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        
+        @media (min-width: 768px) and (max-width: 1199px) {
+            .coverage-grid-8 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .coverage-grid-8 {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .coverage-card-8 {
+                padding: 18px 12px;
+            }
+        }
+        
+        /* ============================================
+           PORTFOLIO PROFESSIONAL STYLING
+           ============================================ */
+        
+        .gallery-overlay-scroll h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .gallery-overlay-scroll p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .project-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-top: 5px;
+        }
+        
+        /* Portfolio Stats */
+        .portfolio-stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            display: block;
+            line-height: 1;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-scroll-wrapper {
+                padding: 0 20px;
+            }
+            
+            .scroll-btn {
+                display: none;
+            }
+            
+            .gallery-item-scroll {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .portfolio-stats {
+                gap: 15px;
+            }
+            
+            .stat-box {
+                padding: 12px 15px;
+                min-width: 100px;
+            }
+            
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container nav-container">
+            <div class="logo">
+                <div class="logo-icon">AG</div>
+                <div class="logo-text">
+                    <h1>AG Glass</h1>
+                    <p>Solusi Kaca & Aluminium Premium</p>
+                </div>
+            </div>
+            
+            <nav class="nav-links">
+                <a href="#home">Beranda</a>
+                <a href="#services">Layanan</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#coverage">Area Layanan</a>
+                <a href="#testimonials">Testimoni</a>
+                <a href="#contact" class="cta-button">Konsultasi Gratis</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h2>Transformasi Ruang dengan Kaca & Aluminium Premium</h2>
+                    <p>Kami menghadirkan solusi lengkap untuk kebutuhan kaca tempered, kusen aluminium, dan elemen arsitektur modern dengan standar kualitas terbaik dan garansi pemasangan.</p>
+                    
+                    <div class="hero-actions">
+                        <a href="https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20tentang%20kaca%20dan%20aluminium" 
+                           target="_blank" 
+                           class="cta-button whatsapp">
+                            <span>💬 Konsultasi via WhatsApp</span>
+                        </a>
+                        <a href="tel:085288852792" class="cta-button">
+                            <span>📞 Telepon Sekarang</span>
+                        </a>
+                    </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <h3>300+</h3>
+                            <p>Proyek Selesai</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>98%</h3>
+                            <p>Kepuasan Klien</p>
+                        </div>
+                        <div class="stat-item">
+                            <h3>Seluruh Indonesia</h3>
+                            <p>Area Layanan</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1564078516393-cf04bd966897?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                         alt="Modern Glass Installation" 
+                         class="hero-img"
+                         id="heroImage">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Layanan Unggulan Kami</h2>
+                <p>Kami menyediakan berbagai solusi kaca dan aluminium untuk kebutuhan perumahan, komersial, dan industri</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🪟</div>
+                    <h3>Kaca Tempered</h3>
+                    <p>Pemasangan kaca tempered berkualitas tinggi untuk jendela, pintu, dan partisi dengan standar keamanan maksimal.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🚪</div>
+                    <h3>Kusen Aluminium</h3>
+                    <p>Kusen aluminium custom dengan berbagai pilihan warna dan finishing, anti karat, dan tahan lama.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Partisi Kantor</h3>
+                    <p>Solusi partisi kaca modern untuk ruang kantor yang meningkatkan produktivitas dan estetika.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">☀️</div>
+                    <h3>Kanopi & Skylight</h3>
+                    <p>Kanopi kaca tempered dan skylight untuk pencahayaan alami maksimal dengan desain modern.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🏬</div>
+                    <h3>Etalase Toko</h3>
+                    <p>Desain dan instalasi etalase toko yang menarik perhatian dengan material kaca berkualitas.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Service & Perawatan</h3>
+                    <p>Layanan perawatan dan perbaikan untuk semua jenis instalasi kaca dan aluminium.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section" style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Portfolio Proyek Kami</h2>
+                <p>Telusuri kualitas dan keahlian kami melalui berbagai proyek instalasi kaca dan aluminium yang telah kami selesaikan</p>
+            </div>
+            
+            <!-- Portfolio Stats -->
+            <div class="portfolio-stats">
+                <div class="stat-box">
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">Jenis Proyek</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">300+</span>
+                    <span class="stat-label">Instalasi</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Kota</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Kepuasan</span>
+                </div>
+            </div>
+            
+            <!-- Scrollable Gallery with Navigation -->
+            <div class="gallery-scroll-container">
+                <div class="gallery-scroll-wrapper">
+                    <button class="scroll-btn prev" id="prevBtn">‹</button>
+                    
+                    <div class="gallery-scroll" id="galleryScroll">
+                        <!-- Gallery items will be generated by JavaScript -->
+                    </div>
+                    
+                    <button class="scroll-btn next" id="nextBtn">›</button>
+                </div>
+                
+                <div class="scroll-indicator">
+                    <span>←</span> Scroll untuk melihat lebih banyak karya kami <span>→</span>
+                </div>
+                
+                <div class="portfolio-counter">
+                    <span class="counter-number">20+ proyek berkualitas</span> | Dapatkan inspirasi untuk proyek Anda
+                </div>
+                
+                <button class="view-all-btn" onclick="window.open('https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20lihat%20semua%20portfolio%20proyek', '_blank')">
+                    📞 Konsultasi Proyek Anda →
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coverage Area Section - REVISI 8 KOLOM KECIL DENGAN DLL -->
+    <section id="coverage" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Jaringan Layanan Nasional</h2>
+                <p>Kami hadir di berbagai wilayah Indonesia untuk memberikan solusi terbaik untuk kebutuhan Anda</p>
+            </div>
+            
+            <div class="coverage-grid-8">
+                <!-- Kolom 1 -->
+                <div class="coverage-card-8">
+                    <div class="icon">📍</div>
+                    <h3>Jawa Tengah</h3>
+                    <p>Domisili utama kami</p>
+                    <p><strong>Semarang & Sekitarnya</strong></p>
+                    <ul class="area-list">
+                        <li>Kendal</li>
+                        <li>Ungaran</li>
+                        <li>Demak</li>
+                        <li class="dll">dan wilayah lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 2 -->
+                <div class="coverage-card-8">
+                    <div class="icon">🏢</div>
+                    <h3>Jabodetabek</h3>
+                    <p>Wilayah Metropolitan</p>
+                    <p><strong>Jakarta & Sekitarnya</strong></p>
+                    <ul class="area-list">
+                        <li>Bogor</li>
+                        <li>Depok</li>
+                        <li>Tangerang</li>
+                        <li class="dll">dan kota lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 3 -->
+                <div class="coverage-card-8">
+                    <div class="icon">⛰️</div>
+                    <h3>Jawa Barat</h3>
+                    <p>Kota-kota Utama</p>
+                    <p><strong>Bandung & Sekitarnya</strong></p>
+                    <ul class="area-list">
+                        <li>Cirebon</li>
+                        <li>Sukabumi</li>
+                        <li>Tasikmalaya</li>
+                        <li class="dll">dan wilayah lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 4 -->
+                <div class="coverage-card-8">
+                    <div class="icon">🌋</div>
+                    <h3>Jawa Timur</h3>
+                    <p>Wilayah Timur Jawa</p>
+                    <p><strong>Surabaya & Sekitarnya</strong></p>
+                    <ul class="area-list">
+                        <li>Malang</li>
+                        <li>Sidoarjo</li>
+                        <li>Mojokerto</li>
+                        <li class="dll">dan kota lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 5 -->
+                <div class="coverage-card-8">
+                    <div class="icon">🏝️</div>
+                    <h3>Bali & Nusa Tenggara</h3>
+                    <p>Wilayah Wisata</p>
+                    <p><strong>Pulau Dewata</strong></p>
+                    <ul class="area-list">
+                        <li>Denpasar</li>
+                        <li>Mataram</li>
+                        <li>Kupang</li>
+                        <li class="dll">dan wilayah lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 6 -->
+                <div class="coverage-card-8">
+                    <div class="icon">🌴</div>
+                    <h3>Sumatera</h3>
+                    <p>Pulau Terbesar</p>
+                    <p><strong>Kota-kota Besar</strong></p>
+                    <ul class="area-list">
+                        <li>Medan</li>
+                        <li>Palembang</li>
+                        <li>Lampung</li>
+                        <li class="dll">dan kota lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 7 -->
+                <div class="coverage-card-8">
+                    <div class="icon">🌳</div>
+                    <h3>Kalimantan</h3>
+                    <p>Pulau Terluas</p>
+                    <p><strong>Wilayah Timur</strong></p>
+                    <ul class="area-list">
+                        <li>Banjarmasin</li>
+                        <li>Balikpapan</li>
+                        <li>Samarinda</li>
+                        <li class="dll">dan wilayah lain</li>
+                    </ul>
+                </div>
+                
+                <!-- Kolom 8 -->
+                <div class="coverage-card-8 highlight-area">
+                    <div class="icon">✨</div>
+                    <h3>Proyek Khusus</h3>
+                    <p>Seluruh Indonesia</p>
+                    <p><strong>Negosiasi Khusus</strong></p>
+                    <ul class="area-list">
+                        <li>Survey Lokasi</li>
+                        <li>Konsultasi Gratis</li>
+                        <li>Penawaran Custom</li>
+                        <li class="dll">dan layanan lain</li>
+                    </ul>
+                    <button class="consult-btn" onclick="window.open('https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20proyek%20khusus', '_blank')">
+                        Konsultasi Sekarang
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="color: var(--muted); font-size: 0.9rem;">📍 <strong>Domisili Utama:</strong> Jawa Tengah</p>
+                <a href="https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah" 
+                   target="_blank" 
+                   class="cta-button" 
+                   style="margin-top: 10px; display: inline-flex; padding: 10px 20px; font-size: 0.9rem;">
+                    <span>🗺️ Lihat Lokasi di Google Maps</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section" style="background: #f8fafc;">
+        <div class="container">
+            <div class="section-title">
+                <h2>Apa Kata Klien Kami</h2>
+                <p>Testimoni dari berbagai klien yang telah menggunakan jasa kami</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <!-- Testimoni 1 -->
+                <div class="testimonial-card">
+                    <div class="rating-badge">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span style="margin-left: 5px;">5.0</span>
+                    </div>
+                    
+                    <p class="testimonial-text">
+                        "AG Glass benar-benar profesional! Pemasangan kaca tempered untuk etalase toko saya sangat rapi dan kuat. Tim datang tepat waktu, komunikasi jelas, dan hasilnya melebihi ekspektasi. Harga juga sangat kompetitif untuk kualitas yang diberikan."
+                    </p>
+                    
+                    <div class="testimonial-author">
+                        <div class="author-avatar avatar-1">
+                            <img src="images/client1.jpg" alt="Budi Santoso" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='BS'">
+                        </div>
+                        <div class="author-info">
+                            <h4>Budi Santoso</h4>
+                            <p>Owner Restoran "Sari Rasa", Semarang</p>
+                            <p class="small">Proyek: Etalase Toko & Kanopi Kaca</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimoni 2 -->
+                <div class="testimonial-card">
+                    <div class="rating-badge">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span style="margin-left: 5px;">5.0</span>
+                    </div>
+                    
+                    <p class="testimonial-text">
+                        "Kami menggunakan jasa AG Glass untuk pemasangan partisi kaca di kantor baru. Hasilnya sangat memuaskan! Desain minimalis sesuai permintaan, pengerjaan cepat, dan finishing sempurna. Garansi yang diberikan juga membuat kami tenang. Highly recommended!"
+                    </p>
+                    
+                    <div class="testimonial-author">
+                        <div class="author-avatar avatar-2">
+                            <img src="images/client2.jpg" alt="Sari Rahmawati" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='SR'">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sari Rahmawati</h4>
+                            <p>Manager PT. Teknologi Maju, Jakarta</p>
+                            <p class="small">Proyek: Partisi Kantor Modern</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimoni 3 -->
+                <div class="testimonial-card">
+                    <div class="rating-badge">
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span class="star">★</span>
+                        <span style="margin-left: 5px;">5.0</span>
+                    </div>
+                    
+                    <p class="testimonial-text">
+                        "Pemasangan kusen aluminium untuk seluruh rumah saya dilakukan dengan sangat profesional. Material berkualitas, tukang ahli, dan rapi sekali. Survey gratis dan penawaran detail membuat proses transparan. Sudah 2 tahun tetap kokoh dan tidak ada masalah."
+                    </p>
+                    
+                    <div class="testimonial-author">
+                        <div class="author-avatar avatar-3">
+                            <img src="images/client3.jpg" alt="Dedi Andrianto" 
+                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                                 onerror="this.style.display='none'; this.parentElement.innerHTML='DA'">
+                        </div>
+                        <div class="author-info">
+                            <h4>Dedi Andrianto</h4>
+                            <p>Home Owner, Semarang</p>
+                            <p class="small">Proyek: Kusen Aluminium Custom</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 50px;">
+                <div class="rating-summary">
+                    <div style="margin-right: 20px;">
+                        <div class="rating-number">4.9</div>
+                        <div class="testimonial-rating" style="justify-content: center;">
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star">★</span>
+                            <span class="star" style="opacity: 0.3;">★</span>
+                        </div>
+                    </div>
+                    <div style="text-align: left;">
+                        <div style="font-weight: 700; color: var(--primary);">Rating Rata-rata</div>
+                        <div style="color: var(--muted); font-size: 0.9rem;">Berdasarkan 47 ulasan dari klien</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Hubungi Kami</h2>
+                <p>Konsultasikan kebutuhan kaca dan aluminium Anda dengan tim ahli kami</p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3>Informasi Kontak</h3>
+                    <p style="color: var(--muted); margin-bottom: 25px;">
+                        Kami siap membantu mewujudkan ide dan kebutuhan Anda dengan solusi terbaik. 
+                        Hubungi kami untuk konsultasi gratis dan penawaran spesial.
+                    </p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <div class="contact-info-content">
+                                <h4>Telepon & WhatsApp</h4>
+                                <a href="tel:085288852792">0852-8885-2792</a>
+                                <br>
+                                <a href="https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20tentang%20kaca%20dan%20aluminium" 
+                                   target="_blank">
+                                   💬 Chat via WhatsApp
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <div class="contact-info-content">
+                                <h4>Lokasi & Area Layanan</h4>
+                                <p><strong>Domisili:</strong> Jawa Tengah</p>
+                                <a href="https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah" 
+                                   target="_blank">
+                                   🗺️ Lihat di Google Maps
+                                </a>
+                                <p style="margin-top: 10px;"><strong>Melayani:</strong> Seluruh Indonesia</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <div class="contact-icon">📧</div>
+                            <div class="contact-info-content">
+                                <h4>Email</h4>
+                                <a href="mailto:agglass001@gmail.com">agglass001@gmail.com</a>
+                                <p style="margin-top: 5px; color: var(--muted); font-size: 0.9rem;">
+                                    Untuk konsultasi detail & dokumen
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 30px;">
+                        <h4 style="margin-bottom: 15px;">FAQ Singkat</h4>
+                        <div class="faq-item">
+                            <h4>Apakah ada garansi?</h4>
+                            <p>Ya — garansi pemasangan standar 6–12 bulan tergantung jenis pekerjaan. Untuk kaca tempered garansi 1 tahun.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h4>Apakah bisa custom ukuran?</h4>
+                            <p>Bisa — kami lakukan pengukuran on-site & produksi sesuai kebutuhan proyek dengan presisi tinggi.</p>
+                        </div>
+                        
+                        <div class="faq-item">
+                            <h4>Berapa lama pengerjaan?</h4>
+                            <p>1-3 hari untuk standar, 5-7 hari untuk custom. Survey gratis dalam 24 jam setelah kontak.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <div class="card" style="background: white; padding: 30px; border-radius: var(--radius); box-shadow: var(--shadow);">
+                        <h3 style="margin-top: 0; margin-bottom: 20px; color: var(--primary);">Formulir Permintaan</h3>
+                        
+                        <!-- NOTICE DIHAPUS SESUAI PERMINTAAN -->
+                        
+                        <form id="contactForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" placeholder="Nama Lengkap *" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" class="form-control" name="phone" placeholder="Nomor Telepon/WhatsApp *" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" placeholder="Email (opsional)">
+                                <small style="color: var(--muted); font-size: 0.85rem; display: block; margin-top: 5px;">
+                                    Isi email untuk mendapat penawaran detail & dokumen
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <select class="form-control" name="service" required>
+                                    <option value="">Pilih Layanan yang Dibutuhkan *</option>
+                                    <option value="Pemasangan Kaca Tempered">Pemasangan Kaca Tempered</option>
+                                    <option value="Kusen & Pintu Aluminium">Kusen & Pintu Aluminium</option>
+                                    <option value="Partisi Kantor">Partisi Kantor</option>
+                                    <option value="Kanopi & Skylight">Kanopi & Skylight</option>
+                                    <option value="Etalase Toko">Etalase Toko</option>
+                                    <option value="Service & Perawatan">Service & Perawatan</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea class="form-control" name="message" placeholder="Deskripsi proyek atau pertanyaan Anda *" rows="4" required></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="cta-button" style="flex: 1;">
+                                    <span>Kirim Permintaan</span>
+                                </button>
+                            </div>
+                            
+                            <div style="text-align: center; margin-top: 15px;">
+                                <small style="color: var(--muted); font-size: 0.85rem;">
+                                    * Wajib diisi | Data Anda aman & tidak disebarkan
+                                </small>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px;">
+                        <div class="logo-icon">AG</div>
+                        <div class="logo-text">
+                            <h1 style="color: white;">AG Glass</h1>
+                            <p style="color: rgba(255,255,255,0.8);">Solusi Kaca & Aluminium Premium</p>
+                        </div>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
+                        Perusahaan spesialis dalam instalasi kaca tempered dan aluminium dengan standar kualitas terbaik dan layanan profesional.
+                    </p>
+                    <p style="color: rgba(255,255,255,0.8);">
+                        <strong>Melayani:</strong> Seluruh Indonesia<br>
+                        <strong>Domisili:</strong> Jawa Tengah
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Layanan</h4>
+                    <ul>
+                        <li><a href="#services">Pemasangan Kaca Tempered</a></li>
+                        <li><a href="#services">Kusen & Pintu Aluminium</a></li>
+                        <li><a href="#services">Partisi Kantor</a></li>
+                        <li><a href="#services">Kanopi & Skylight</a></li>
+                        <li><a href="#services">Etalase Toko</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak</h4>
+                    <ul>
+                        <li>📞 <a href="tel:085288852792">0852-8885-2792</a></li>
+                        <li>💬 <a href="https://wa.me/6285288852792" target="_blank">WhatsApp</a></li>
+                        <li>📍 <a href="https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah" target="_blank">Jawa Tengah</a></li>
+                        <li>📧 <a href="mailto:agglass001@gmail.com">agglass001@gmail.com</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="terms.html">Syarat & Ketentuan</a></li>
+                        <li><a href="privacy.html">Kebijakan Privasi</a></li>
+                        <li><a href="warranty.html">Garansi Layanan</a></li>
+                        <li><a href="#contact">Kontak & Bantuan</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 AG Glass. Semua hak dilindungi. | Melayani seluruh Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20tentang%20kaca%20dan%20aluminium" 
+       target="_blank" 
+       class="whatsapp-float" 
+       aria-label="Chat via WhatsApp">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M20.52 3.48A11.88 11.88 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.115.551 4.167 1.597 5.989L0 24l6.247-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12 0-1.876-.444-3.64-1.48-5.32z" fill="#fff"/>
+            <path d="M17.2 14.5s-.5 1.3-1.5 2c-.9.6-1.8.6-3.3.3-1-.2-2.8-1-4.3-2.6C6.9 13.1 6 11.5 6 11.5s.9-.1 1.8-.1c.8 0 1.4.1 2 .4.5.3.9.7 1.5 1 .6.3 1.1.3 1.6.2.5-.1 1.1-.5 1.5-1.1.4-.6.6-1.3.6-1.3s.7.2 1.1.5c.4.3.6.7.4 1.1z" fill="#25D366"/>
+        </svg>
+    </a>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        // ============================
+        // 1. GALLERY PORTFOLIO PROFESSIONAL
+        // ============================
+        document.addEventListener('DOMContentLoaded', function() {
+            const projects = [];
+            
+            // Data untuk 20 proyek dengan deskripsi profesional
+            const projectData = [
+                {
+                    number: 1,
+                    title: "Partisi Kantor Modern",
+                    location: "Jakarta CBD",
+                    type: "Kaca Tempered 12mm",
+                    description: "Instalasi partisi kaca untuk kantor startup teknologi"
+                },
+                {
+                    number: 2,
+                    title: "Etalase Premium",
+                    location: "Semarang",
+                    type: "Kaca Laminasi",
+                    description: "Desain etalase toko retail dengan sistem sliding"
+                },
+                {
+                    number: 3,
+                    title: "Kusen Aluminium",
+                    location: "Bandung",
+                    type: "Aluminium T7",
+                    description: "Kusen jendela custom untuk rumah minimalis"
+                },
+                {
+                    number: 4,
+                    title: "Kanopi Tempered",
+                    location: "Surabaya",
+                    type: "Kaca Tempered 10mm",
+                    description: "Kanopi kaca untuk teras rumah mewah"
+                },
+                {
+                    number: 5,
+                    title: "Meeting Room",
+                    location: "Yogyakarta",
+                    type: "Partisi Geser",
+                    description: "Ruangan meeting dengan sistem partisi fleksibel"
+                },
+                {
+                    number: 6,
+                    title: "Railing Balkon",
+                    location: "Bali",
+                    type: "Kaca Tempered + SS",
+                    description: "Railing balkon hotel dengan kombinasi stainless"
+                },
+                {
+                    number: 7,
+                    title: "Shower Screen",
+                    location: "Medan",
+                    type: "Kaca Tempered 8mm",
+                    description: "Shower screen kamar mandi mewah"
+                },
+                {
+                    number: 8,
+                    title: "Skylight Atrium",
+                    location: "Makassar",
+                    type: "Kaca Laminasi",
+                    description: "Skylight untuk pencahayaan alami atrium"
+                },
+                {
+                    number: 9,
+                    title: "Pintu Geser",
+                    location: "Palembang",
+                    type: "Kaca + Aluminium",
+                    description: "Sistem pintu geser untuk ruang terbuka"
+                },
+                {
+                    number: 10,
+                    title: "Dinding Kantor",
+                    location: "Balikpapan",
+                    type: "Kaca Dinding",
+                    description: "Dinding kaca full untuk ruang kerja"
+                },
+                {
+                    number: 11,
+                    title: "Balkon Hotel",
+                    location: "Malang",
+                    type: "Kaca Tempered",
+                    description: "Balkon kaca dengan view pemandangan"
+                },
+                {
+                    number: 12,
+                    title: "Fasad Gedung",
+                    location: "Bogor",
+                    type: "Curtain Wall",
+                    description: "Sistem curtain wall untuk fasad komersial"
+                },
+                {
+                    number: 13,
+                    title: "Tangga Minimalis",
+                    location: "Denpasar",
+                    type: "Kaca + Baja",
+                    description: "Tangga dengan railing kaca minimalis"
+                },
+                {
+                    number: 14,
+                    title: "Jendela Sliding",
+                    location: "Solo",
+                    type: "Aluminium System",
+                    description: "Sistem jendela sliding untuk rumah"
+                },
+                {
+                    number: 15,
+                    title: "Cabinet Dapur",
+                    location: "Cirebon",
+                    type: "Kaca Display",
+                    description: "Kabinet dapur dengan pintu kaca"
+                },
+                {
+                    number: 16,
+                    title: "Meja Rapat",
+                    location: "Bekasi",
+                    type: "Kaca Tempered",
+                    description: "Meja rapat dengan top kaca tempered"
+                },
+                {
+                    number: 17,
+                    title: "Ruang Meeting",
+                    location: "Tangerang",
+                    type: "Partisi Akustik",
+                    description: "Partisi ruang meeting dengan insulasi suara"
+                },
+                {
+                    number: 18,
+                    title: "Toko Retail",
+                    location: "Depok",
+                    type: "Display Kaca",
+                    description: "Sistem display untuk toko retail"
+                },
+                {
+                    number: 19,
+                    title: "Showroom Mobil",
+                    location: "Mataram",
+                    type: "Kaca Exhibition",
+                    description: "Showroom mobil dengan dinding kaca"
+                },
+                {
+                    number: 20,
+                    title: "Restoran",
+                    location: "Kupang",
+                    type: "Glass Wall",
+                    description: "Dinding kaca untuk restoran dengan view"
+                }
+            ];
+            
+            // Generate 20 proyek
+            projectData.forEach(data => {
+                const fallbackUrl = `https://images.unsplash.com/photo-${1550000000000 + data.number * 100000}?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80`;
+                
+                projects.push({
+                    number: data.number,
+                    title: data.title,
+                    location: data.location,
+                    type: data.type,
+                    description: data.description,
+                    fallback: fallbackUrl
+                });
+            });
+
+            const galleryScroll = document.getElementById('galleryScroll');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            
+            // Generate gallery items dengan infinite effect
+            function generateGalleryItems() {
+                galleryScroll.innerHTML = '';
+                
+                // Buat 40 item (2 putaran) untuk infinite effect
+                for (let loop = 0; loop < 2; loop++) {
+                    projects.forEach(project => {
+                        const projectImage = `images/project${project.number}.jpg`;
+                        const projectAlt = `${project.title} - ${project.location}`;
+                        
+                        const galleryItem = document.createElement('div');
+                        galleryItem.className = 'gallery-item-scroll';
+                        
+                        galleryItem.innerHTML = `
+                            <img src="${projectImage}" 
+                                 alt="${projectAlt}" 
+                                 class="gallery-img-scroll"
+                                 onerror="this.src='${project.fallback}'; this.alt='${projectAlt} (Gambar Default)'">
+                            <div class="gallery-overlay-scroll">
+                                <h3>${project.title}</h3>
+                                <p>📍 ${project.location}</p>
+                                <p>${project.type}</p>
+                                <div class="project-badge">Proyek ${project.number}</div>
+                            </div>
+                        `;
+                        
+                        galleryScroll.appendChild(galleryItem);
+                        
+                        // Add click event
+                        galleryItem.addEventListener('click', function() {
+                            const imgSrc = this.querySelector('img').src;
+                            Swal.fire({
+                                title: project.title,
+                                html: `
+                                    <div style="text-align: left;">
+                                        <p><strong>📍 Lokasi:</strong> ${project.location}</p>
+                                        <p><strong>🔧 Jenis:</strong> ${project.type}</p>
+                                        <p><strong>📋 Deskripsi:</strong> ${project.description}</p>
+                                        <hr style="margin: 15px 0;">
+                                        <p style="font-size: 0.9rem; color: #666;">Ingin konsultasi proyek serupa?</p>
+                                    </div>
+                                `,
+                                imageUrl: imgSrc,
+                                imageWidth: 400,
+                                imageHeight: 300,
+                                imageAlt: project.title,
+                                showCancelButton: true,
+                                confirmButtonText: '💬 Konsultasi via WhatsApp',
+                                cancelButtonText: 'Tutup',
+                                confirmButtonColor: '#25D366'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    const message = `Halo AG Glass, saya tertarik dengan proyek ${project.title} di ${project.location}. Bisa konsultasi untuk proyek serupa?`;
+                                    window.open(`https://wa.me/6285288852792?text=${encodeURIComponent(message)}`, '_blank');
+                                }
+                            });
+                        });
+                    });
+                }
+            }
+            
+            // Navigation buttons functionality
+            prevBtn.addEventListener('click', () => {
+                galleryScroll.scrollBy({
+                    left: -340,
+                    behavior: 'smooth'
+                });
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                galleryScroll.scrollBy({
+                    left: 340,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // INFINITE SCROLL EFFECT - NYAMBUNG TERUS
+            let autoScrollInterval;
+            let scrollDirection = 1; // 1 untuk kanan, -1 untuk kiri
+            
+            function startInfiniteScroll() {
+                autoScrollInterval = setInterval(() => {
+                    const maxScroll = galleryScroll.scrollWidth - galleryScroll.clientWidth;
+                    const currentScroll = galleryScroll.scrollLeft;
+                    
+                    if (currentScroll >= maxScroll - 10) {
+                        // Kembali ke awal dengan cepat (tidak smooth)
+                        galleryScroll.scrollLeft = 0;
+                    } else {
+                        // Scroll ke kanan
+                        galleryScroll.scrollLeft += 1;
+                    }
+                }, 20); // Scroll sangat halus
+            }
+            
+            function stopInfiniteScroll() {
+                clearInterval(autoScrollInterval);
+            }
+            
+            // Initialize gallery
+            generateGalleryItems();
+            
+            // Start infinite scroll setelah 1 detik
+            setTimeout(() => {
+                startInfiniteScroll();
+            }, 1000);
+            
+            // Pause on hover
+            galleryScroll.addEventListener('mouseenter', stopInfiniteScroll);
+            galleryScroll.addEventListener('touchstart', stopInfiniteScroll);
+            
+            galleryScroll.addEventListener('mouseleave', () => {
+                startInfiniteScroll();
+            });
+
+            // ============================
+            // 2. FORM FIX - EMAIL MASALAH DIPERBAIKI
+            // ============================
+            document.getElementById('contactForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const name = document.querySelector('input[name="name"]').value.trim();
+                const phone = document.querySelector('input[name="phone"]').value.trim();
+                const email = document.querySelector('input[name="email"]').value.trim();
+                const service = document.querySelector('select[name="service"]').value;
+                const message = document.querySelector('textarea[name="message"]').value.trim();
+                
+                // Validasi
+                if (!name || !phone || !service || !message) {
+                    Swal.fire({
+                        title: 'Data Belum Lengkap',
+                        text: 'Harap isi semua field yang wajib diisi (*)',
+                        icon: 'warning',
+                        confirmButtonText: 'OK'
+                    });
+                    return;
+                }
+
+                // Format pesan untuk WhatsApp
+                const whatsappMessage = `*FORM KONSULTASI AG GLASS*%0A%0A` +
+                                      `*Nama:* ${name}%0A` +
+                                      `*No. HP:* ${phone}%0A` +
+                                      (email ? `*Email:* ${email}%0A` : '') +
+                                      `*Layanan:* ${service}%0A` +
+                                      `*Pesan:* ${message}%0A%0A` +
+                                      `_Pesan ini dikirim via website AG Glass_`;
+                
+                // Tampilkan loading
+                Swal.fire({
+                    title: 'Mengirim Permintaan...',
+                    text: 'Mohon tunggu sebentar',
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+                
+                // Simulasi proses
+                setTimeout(() => {
+                    Swal.fire({
+                        title: 'Permintaan Berhasil Dikirim!',
+                        html: `
+                            <div style="text-align: left;">
+                                <p><strong>✅ Terima kasih ${name}!</strong></p>
+                                <p>Permintaan Anda telah kami terima dan akan segera diproses.</p>
+                                <hr style="margin: 15px 0;">
+                                <p><strong>📞 Langkah Selanjutnya:</strong></p>
+                                <p>1. Tim kami akan menghubungi via WhatsApp dalam 1x24 jam</p>
+                                ${email ? `<p>2. Detail penawaran akan dikirim ke email: <strong>${email}</strong></p>` : ''}
+                                <p>3. Survey lokasi gratis akan dijadwalkan</p>
+                            </div>
+                        `,
+                        icon: 'success',
+                        showCancelButton: true,
+                        confirmButtonText: '💬 Buka WhatsApp',
+                        cancelButtonText: 'Tutup',
+                        confirmButtonColor: '#25D366'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Buka WhatsApp
+                            const whatsappURL = `https://wa.me/6285288852792?text=${whatsappMessage}`;
+                            window.open(whatsappURL, '_blank');
+                            
+                            // Jika ada email, juga buka mailto
+                            if (email) {
+                                const emailSubject = `Konsultasi AG Glass - ${name}`;
+                                const emailBody = `
+Halo AG Glass,
+
+Saya ${name} tertarik dengan layanan: ${service}
+
+Detail:
+- Nama: ${name}
+- No. HP: ${phone}
+- Email: ${email}
+- Layanan: ${service}
+- Pesan: ${message}
+
+Mohon info detail penawaran dan konsultasi lebih lanjut.
+
+Terima kasih,
+${name}
+                                `.trim();
+                                
+                                const emailURL = `mailto:agglass001@gmail.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                                // Buka email di tab baru
+                                window.open(emailURL, '_blank');
+                            }
+                        }
+                    });
+                    
+                    // Reset form
+                    document.getElementById('contactForm').reset();
+                    
+                }, 1500);
+            });
+
+            // ============================
+            // 3. OTHER FUNCTIONS
+            // ============================
+            
+            // Smooth scroll for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Header scroll effect
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.header');
+                if(window.scrollY > 100) {
+                    header.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.1)';
+                } else {
+                    header.style.boxShadow = '0 2px 20px rgba(11, 18, 38, 0.05)';
+                }
+            });
+            
+            // Auto-update hero image if hero.jpg exists
+            const heroImage = document.getElementById('heroImage');
+            const heroTest = new Image();
+            heroTest.src = 'images/hero.jpg';
+            heroTest.onload = function() {
+                heroImage.src = 'images/hero.jpg';
+                heroImage.alt = 'Gambar utama AG Glass';
+            };
+        });
+    </script>
+</body>
+</html>

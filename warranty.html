@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garansi Layanan - AG Glass</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8fafc;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 50px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e6eeff;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0b1226, #2563eb);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+        }
+        
+        h1 {
+            color: #0b1226;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #64748b;
+            font-size: 1.1rem;
+        }
+        
+        h2 {
+            color: #0b1226;
+            margin: 30px 0 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e6eeff;
+        }
+        
+        h3 {
+            color: #2563eb;
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            color: #475569;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            color: #475569;
+        }
+        
+        .warranty-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .highlight {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2563eb;
+            margin: 20px 0;
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #0b1226;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 30px;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+        
+        .contact-info {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .warranty-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .warranty-table th, .warranty-table td {
+            border: 1px solid #e2e8f0;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .warranty-table th {
+            background: #f1f5f9;
+            color: #0b1226;
+        }
+        
+        .warranty-table .covered {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .warranty-table .not-covered {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .process-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 200px;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: #2563eb;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">AG</div>
+                <div>
+                    <h1>AG Glass</h1>
+                    <p class="subtitle">Solusi Kaca & Aluminium Premium</p>
+                </div>
+            </div>
+            <h2>Program Garansi Layanan</h2>
+            <p>Komitmen kami untuk kepuasan dan keamanan Anda</p>
+        </div>
+
+        <div class="highlight">
+            <p><strong>✅ Garansi Tanpa Ribet:</strong> Kami memberikan garansi yang jelas, transparan, dan mudah diakses. Fokus kami adalah solusi cepat untuk masalah Anda.</p>
+        </div>
+
+        <h2>1. Cakupan Garansi</h2>
+        
+        <h3>1.1 Garansi Pemasangan</h3>
+        <p><span class="warranty-badge">1 TAHUN</span> Untuk semua jenis pemasangan</p>
+        <ul>
+            <li>Kekurangan sekrup/pengencang</li>
+            <li>Kebocoran sealant/silicon</li>
+            <li>Pemasangan tidak level/tegak</li>
+            <li>Suara berderit pada engsel</li>
+        </ul>
+
+        <h3>1.2 Garansi Material</h3>
+        <table class="warranty-table">
+            <thead>
+                <tr>
+                    <th>Material</th>
+                    <th>Periode Garansi</th>
+                    <th>Cakupan</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Kaca Tempered</td>
+                    <td>2 Tahun</td>
+                    <td class="covered">Retak spontan, bubble, defect pabrik</td>
+                </tr>
+                <tr>
+                    <td>Kusen Aluminium</td>
+                    <td>3 Tahun</td>
+                    <td class="covered">Pengelasan, finishing cat, hardware</td>
+                </tr>
+                <tr>
+                    <td>Hardware (kunci, engsel)</td>
+                    <td>1 Tahun</td>
+                    <td class="covered">Rusak fungsi, karat prematur</td>
+                </tr>
+                <tr>
+                    <td>Sealant & Silicon</td>
+                    <td>6 Bulan</td>
+                    <td class="covered">Retak, mengelupas, kebocoran</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>2. Yang TIDAK Dicover Garansi</h2>
+        
+        <div class="highlight" style="border-left-color: #ef4444;">
+            <p><strong>⚠️ Pengecualian Garansi:</strong></p>
+            <ul>
+                <li>Kerusakan akibat bencana alam (gempa, banjir, angin kencang)</li>
+                <li>Kerusakan akibat vandalisme atau kecelakaan</li>
+                <li>Modifikasi/ubah sendiri tanpa persetujuan kami</li>
+                <li>Pemakaian bahan kimia korosif untuk pembersihan</li>
+                <li>Kerusakan akibat kelalaian perawatan</li>
+            </ul>
+        </div>
+
+        <h2>3. Proses Klaim Garansi</h2>
+        
+        <div class="process-steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Laporkan Masalah</h3>
+                <p>Hubungi via WhatsApp dengan foto dan deskripsi kerusakan</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Verifikasi</h3>
+                <p>Tim kami verifikasi dalam 24 jam apakah termasuk garansi</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Jadwal Perbaikan</h3>
+                <p>Kami jadwalkan perbaikan dalam 1-3 hari kerja</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Eksekusi</h3>
+                <p>Perbaikan dilakukan dengan standar kualitas sama</p>
+            </div>
+        </div>
+
+        <h2>4. Service Maintenance</h2>
+        
+        <h3>4.1 Gratis 3 Bulan Pertama</h3>
+        <ul>
+            <li>Pengecekan kekencangan sekrup</li>
+            <li>Pembersihan track pintu geser</li>
+            <li>Pelumasan engsel dan hardware</li>
+            <li>Pengecekan sealant dan silicon</li>
+        </ul>
+
+        <h3>4.2 Service Berlanjut</h3>
+        <ul>
+            <li>Setelah 3 bulan: biaya service Rp 150.000/kunjungan</li>
+            <li>Prioritas untuk pelanggan garansi</li>
+            <li>Janji temu fleksibel (weekday/weekend)</li>
+            <li>Free estimate untuk perbaikan besar</li>
+        </ul>
+
+        <h2>5. Keunggulan Garansi AG Glass</h2>
+        
+        <div class="highlight">
+            <p><strong>🏆 Kenapa Memilih Kami:</strong></p>
+            <ul>
+                <li><strong>Respons Cepat:</strong> Maksimal 24 jam respon pertama</li>
+                <li><strong>Tanpa Biaya:</strong> Semua biaya service garansi FREE</li>
+                <li><strong>Transparan:</strong> Penjelasan jelas tentang cakupan garansi</li>
+                <li><strong>Dokumen Jelas:</strong> Surat garansi resmi dengan stempel</li>
+                <li><strong>Tim Dedicated:</strong> Teknisi khusus untuk service garansi</li>
+            </ul>
+        </div>
+
+        <h2>6. FAQ Garansi</h2>
+        
+        <h3>❓ Bagaimana jika saya pindah rumah?</h3>
+        <p>Garansi tetap berlaku untuk material, namun untuk pemasangan di lokasi baru perlu pengecekan ulang.</p>
+
+        <h3>❓ Apakah garansi bisa diperpanjang?</h3>
+        <p>Ya, dengan biaya tertentu garansi dapat diperpanjang hingga 5 tahun.</p>
+
+        <h3>❓ Bagaimana untuk proyek luar kota?</h3>
+        <p>Garansi tetap berlaku, biaya transportasi teknisi ditanggung klien untuk lokasi >50km dari Semarang.</p>
+
+        <h3>❓ Apa bukti garansi yang diberikan?</h3>
+        <p>Invoice final yang berisi detail garansi dan nomor kontrak.</p>
+
+        <div class="contact-info">
+            <h4>📞 Pusat Layanan Garansi</h4>
+            <p>Untuk klaim garansi atau pertanyaan:</p>
+            <p><strong>Hotline:</strong> <a href="tel:085288852792">0852-8885-2792</a> (pilih ext. 2)</p>
+            <p><strong>WhatsApp:</strong> <a href="https://wa.me/6285288852792?text=Klaim%20Garansi">Klik untuk klaim garansi</a></p>
+            <p><strong>Email:</strong> <a href="mailto:warranty@agglass.com">warranty@agglass.com</a></p>
+            <p><strong>Jam Layanan:</strong> Senin-Jumat 08:00-17:00</p>
+        </div>
+
+        <h2>7. Persyaratan Klaim</h2>
+        <ul>
+            <li>Invoice asli atau fotokopi yang dilegalisir</li>
+            <li>Foto kerusakan yang jelas (minimal 3 angle)</li>
+            <li>Deskripsi kronologis kerusakan</li>
+            <li>Kontak person yang bisa dihubungi</li>
+        </ul>
+
+        <a href="index.html" class="back-button">← Kembali ke Beranda</a>
+    </div>
+</body>
+</html>
