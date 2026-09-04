@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - AG Glass</title>
+<meta name="robots" content="noindex, nofollow">
+<style>
+    :root {
+        --primary: #0b1226;
+        --secondary: #2563eb;
+        --accent: #3b82f6;
+        --light: #f8fafc;
+        --muted: #64748b;
+        --success: #10b981;
+        --danger: #ef4444;
+        --radius: 12px;
+        --shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        background: var(--light);
+        color: var(--primary);
+        min-height: 100vh;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 24px 20px 60px; }
+
+    /* Login screen */
+    #loginScreen {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+    .login-card {
+        background: white;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        padding: 40px 32px;
+        width: 100%;
+        max-width: 380px;
+    }
+    .login-card h1 { font-size: 1.4rem; margin-bottom: 4px; }
+    .login-card p.sub { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+    .login-logo {
+        width: 56px; height: 56px; border-radius: 14px;
+        background: linear-gradient(135deg, var(--secondary), var(--accent));
+        color: white; display: flex; align-items: center; justify-content: center;
+        font-weight: bold; font-size: 1.1rem; margin-bottom: 16px;
+    }
+
+    label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; color: var(--primary); }
+    input[type="text"], input[type="email"], input[type="password"], input[type="url"], textarea, input[type="date"] {
+        width: 100%;
+        padding: 11px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        margin-bottom: 16px;
+        font-family: inherit;
+        transition: border-color 0.2s;
+    }
+    input:focus, textarea:focus { outline: none; border-color: var(--secondary); }
+    textarea { resize: vertical; min-height: 80px; }
+
+    button {
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        padding: 12px 20px;
+        transition: opacity 0.2s, transform 0.1s;
+        font-family: inherit;
+    }
+    button:hover { opacity: 0.92; }
+    button:active { transform: scale(0.98); }
+    .btn-primary { background: var(--secondary); color: white; width: 100%; }
+    .btn-danger { background: #fee2e2; color: var(--danger); }
+    .btn-secondary { background: #eef2ff; color: var(--secondary); }
+    .btn-logout { background: transparent; color: var(--muted); border: 1.5px solid #e2e8f0; }
+
+    #errorMsg { color: var(--danger); font-size: 0.85rem; margin-top: -8px; margin-bottom: 12px; display: none; }
+    #setupNotice {
+        background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px;
+        padding: 12px 14px; font-size: 0.85rem; color: #9a3412; margin-bottom: 20px; display: none;
+    }
+
+    /* Dashboard */
+    #dashboard { display: none; }
+    .topbar {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 16px 0; margin-bottom: 24px; border-bottom: 1px solid #e2e8f0;
+    }
+    .topbar h1 { font-size: 1.2rem; }
+    .topbar .brand { display: flex; align-items: center; gap: 10px; }
+    .topbar .brand .dot { width: 32px; height: 32px; border-radius: 8px; background: linear-gradient(135deg, var(--secondary), var(--accent)); }
+
+    .card {
+        background: white; border-radius: var(--radius); box-shadow: var(--shadow);
+        padding: 24px; margin-bottom: 20px;
+    }
+    .card h2 { font-size: 1.05rem; margin-bottom: 4px; }
+    .card p.card-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 20px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    @media (max-width: 640px) { .grid-2 { grid-template-columns: 1fr; } }
+
+    .logo-preview {
+        width: 60px; height: 60px; border-radius: 12px; object-fit: cover;
+        border: 1.5px solid #e2e8f0; margin-bottom: 12px; display: none; background: #f1f5f9;
+    }
+
+    .news-item {
+        border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px 16px;
+        margin-bottom: 12px; display: flex; justify-content: space-between; align-items: flex-start; gap: 12px;
+    }
+    .news-item .ni-content { flex: 1; }
+    .news-item .ni-date { font-size: 0.78rem; color: var(--muted); }
+    .news-item h4 { font-size: 0.95rem; margin: 2px 0 4px; }
+    .news-item p { font-size: 0.85rem; color: var(--muted); white-space: pre-wrap; }
+    .news-item .ni-actions { display: flex; gap: 6px; flex-shrink: 0; }
+    .news-item .ni-actions button { padding: 6px 10px; font-size: 0.8rem; }
+
+    #saveStatus { font-size: 0.85rem; margin-top: 8px; display: none; }
+    #saveStatus.ok { color: var(--success); }
+    #saveStatus.err { color: var(--danger); }
+
+    .empty-state { color: var(--muted); font-size: 0.9rem; text-align: center; padding: 20px 0; }
+</style>
+</head>
+<body>
+
+<!-- ============ LOGIN SCREEN ============ -->
+<div id="loginScreen">
+    <div class="login-card">
+        <div class="login-logo">AG</div>
+        <h1>Admin Panel</h1>
+        <p class="sub">Masuk untuk mengatur konten website AG Glass</p>
+
+        <div id="setupNotice">
+            ⚠️ Firebase belum dikonfigurasi. Buka file <strong>firebase-config.js</strong> dan isi dengan config project Firebase Anda terlebih dahulu.
+        </div>
+
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" placeholder="admin@email.com" autocomplete="username">
+
+        <label for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" placeholder="••••••••" autocomplete="current-password">
+
+        <div id="errorMsg"></div>
+
+        <button class="btn-primary" id="loginBtn">Masuk</button>
+    </div>
+</div>
+
+<!-- ============ DASHBOARD ============ -->
+<div id="dashboard">
+    <div class="wrap">
+        <div class="topbar">
+            <div class="brand">
+                <div class="dot"></div>
+                <h1>Admin Panel AG Glass</h1>
+            </div>
+            <button class="btn-logout" id="logoutBtn">Keluar</button>
+        </div>
+
+        <!-- Pengaturan Umum -->
+        <div class="card">
+            <h2>Pengaturan Umum</h2>
+            <p class="card-sub">Perubahan di sini langsung tampil di website setelah disimpan (refresh halaman website untuk melihatnya).</p>
+
+            <div class="grid-2">
+                <div>
+                    <label for="cfgBusinessName">Nama Usaha</label>
+                    <input type="text" id="cfgBusinessName" placeholder="AG Glass">
+                </div>
+                <div>
+                    <label for="cfgTagline">Tagline / Slogan</label>
+                    <input type="text" id="cfgTagline" placeholder="Solusi Kaca & Aluminium Premium">
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div>
+                    <label for="cfgWhatsapp">Nomor WhatsApp (format 62xxxxxxxxxxx, tanpa spasi/strip)</label>
+                    <input type="text" id="cfgWhatsapp" placeholder="6285288852792">
+                </div>
+                <div>
+                    <label for="cfgPhone">Nomor Telepon (untuk tombol "Telepon", format 08xxxxxxxxxx)</label>
+                    <input type="text" id="cfgPhone" placeholder="085288852792">
+                </div>
+            </div>
+
+            <label for="cfgEmail">Email</label>
+            <input type="email" id="cfgEmail" placeholder="agglass001@gmail.com">
+
+            <label for="cfgAddress">Teks Alamat / Domisili</label>
+            <input type="text" id="cfgAddress" placeholder="Jawa Tengah">
+
+            <label for="cfgMapsUrl">Link Google Maps (buka Google Maps, cari lokasi, klik Share/Bagikan, copy link-nya ke sini)</label>
+            <input type="url" id="cfgMapsUrl" placeholder="https://www.google.com/maps/place/...">
+
+            <label for="cfgLogoUrl">URL Gambar Logo (upload logo ke Google Drive/Imgur lalu tempel link gambar langsungnya di sini, atau kosongkan untuk pakai logo teks default)</label>
+            <input type="url" id="cfgLogoUrl" placeholder="https://... (opsional)">
+            <img id="logoPreview" class="logo-preview" alt="Preview logo">
+
+            <button class="btn-primary" id="saveConfigBtn">Simpan Pengaturan</button>
+            <div id="saveStatus"></div>
+        </div>
+
+        <!-- Info & Promo -->
+        <div class="card">
+            <h2>Info & Promo</h2>
+            <p class="card-sub">Muncul otomatis sebagai section "Info & Promo Terbaru" di website. Kosongkan semua untuk menyembunyikan section ini.</p>
+
+            <label for="newsTitle">Judul</label>
+            <input type="text" id="newsTitle" placeholder="Contoh: Promo Spesial Bulan Ini">
+
+            <label for="newsDate">Tanggal (opsional, teks bebas)</label>
+            <input type="text" id="newsDate" placeholder="Contoh: September 2026">
+
+            <label for="newsContent">Isi</label>
+            <textarea id="newsContent" placeholder="Tulis detail promo atau info di sini..."></textarea>
+
+            <button class="btn-secondary" id="addNewsBtn">+ Tambah Info/Promo</button>
+
+            <div id="newsListAdmin" style="margin-top: 20px;"></div>
+        </div>
+    </div>
+</div>
+
+<script src="firebase-config.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import {
+        getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
+    import {
+        getFirestore, doc, getDoc, setDoc, collection, query, orderBy,
+        getDocs, addDoc, deleteDoc, serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+    const loginScreen = document.getElementById('loginScreen');
+    const dashboard = document.getElementById('dashboard');
+    const errorMsg = document.getElementById('errorMsg');
+    const setupNotice = document.getElementById('setupNotice');
+
+    // Cek apakah firebase-config.js sudah diisi
+    const firebaseReady = window.FIREBASE_CONFIG && window.FIREBASE_CONFIG.apiKey && !window.FIREBASE_CONFIG.apiKey.includes('GANTI');
+    if (!firebaseReady) {
+        setupNotice.style.display = 'block';
+        document.getElementById('loginBtn').disabled = true;
+    }
+
+    let app, auth, db;
+    if (firebaseReady) {
+        app = initializeApp(window.FIREBASE_CONFIG);
+        auth = getAuth(app);
+        db = getFirestore(app);
+    }
+
+    // ---------- LOGIN ----------
+    document.getElementById('loginBtn').addEventListener('click', async () => {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        errorMsg.style.display = 'none';
+        if (!email || !password) {
+            errorMsg.textContent = 'Isi email dan password terlebih dahulu.';
+            errorMsg.style.display = 'block';
+            return;
+        }
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+        } catch (err) {
+            errorMsg.textContent = 'Login gagal. Periksa kembali email/password Anda.';
+            errorMsg.style.display = 'block';
+        }
+    });
+
+    document.getElementById('logoutBtn').addEventListener('click', () => signOut(auth));
+
+    if (firebaseReady) {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginScreen.style.display = 'none';
+                dashboard.style.display = 'block';
+                loadConfig();
+                loadNewsAdmin();
+            } else {
+                loginScreen.style.display = 'flex';
+                dashboard.style.display = 'none';
+            }
+        });
+    }
+
+    // ---------- PENGATURAN UMUM ----------
+    const DEFAULT_CONFIG = {
+        businessName: 'AG Glass',
+        tagline: 'Solusi Kaca & Aluminium Premium',
+        whatsapp: '6285288852792',
+        phone: '085288852792',
+        email: 'agglass001@gmail.com',
+        address: 'Jawa Tengah',
+        mapsUrl: 'https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah',
+        logoUrl: ''
+    };
+
+    async function loadConfig() {
+        try {
+            const snap = await getDoc(doc(db, 'siteSettings', 'config'));
+            const cfg = snap.exists() ? { ...DEFAULT_CONFIG, ...snap.data() } : DEFAULT_CONFIG;
+            document.getElementById('cfgBusinessName').value = cfg.businessName || '';
+            document.getElementById('cfgTagline').value = cfg.tagline || '';
+            document.getElementById('cfgWhatsapp').value = cfg.whatsapp || '';
+            document.getElementById('cfgPhone').value = cfg.phone || '';
+            document.getElementById('cfgEmail').value = cfg.email || '';
+            document.getElementById('cfgAddress').value = cfg.address || '';
+            document.getElementById('cfgMapsUrl').value = cfg.mapsUrl || '';
+            document.getElementById('cfgLogoUrl').value = cfg.logoUrl || '';
+            updateLogoPreview(cfg.logoUrl);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    document.getElementById('cfgLogoUrl').addEventListener('input', (e) => updateLogoPreview(e.target.value));
+    function updateLogoPreview(url) {
+        const img = document.getElementById('logoPreview');
+        if (url) {
+            img.src = url;
+            img.style.display = 'block';
+        } else {
+            img.style.display = 'none';
+        }
+    }
+
+    document.getElementById('saveConfigBtn').addEventListener('click', async () => {
+        const cfg = {
+            businessName: document.getElementById('cfgBusinessName').value.trim() || DEFAULT_CONFIG.businessName,
+            tagline: document.getElementById('cfgTagline').value.trim() || DEFAULT_CONFIG.tagline,
+            whatsapp: document.getElementById('cfgWhatsapp').value.trim().replace(/[^0-9]/g, '') || DEFAULT_CONFIG.whatsapp,
+            phone: document.getElementById('cfgPhone').value.trim() || DEFAULT_CONFIG.phone,
+            email: document.getElementById('cfgEmail').value.trim() || DEFAULT_CONFIG.email,
+            address: document.getElementById('cfgAddress').value.trim() || DEFAULT_CONFIG.address,
+            mapsUrl: document.getElementById('cfgMapsUrl').value.trim() || DEFAULT_CONFIG.mapsUrl,
+            logoUrl: document.getElementById('cfgLogoUrl').value.trim()
+        };
+        const statusEl = document.getElementById('saveStatus');
+        try {
+            await setDoc(doc(db, 'siteSettings', 'config'), cfg, { merge: true });
+            statusEl.textContent = '✅ Tersimpan! Refresh halaman website untuk melihat perubahan.';
+            statusEl.className = 'ok';
+            statusEl.style.display = 'block';
+        } catch (err) {
+            statusEl.textContent = '❌ Gagal menyimpan: ' + err.message;
+            statusEl.className = 'err';
+            statusEl.style.display = 'block';
+        }
+        setTimeout(() => { statusEl.style.display = 'none'; }, 4000);
+    });
+
+    // ---------- INFO & PROMO ----------
+    async function loadNewsAdmin() {
+        const container = document.getElementById('newsListAdmin');
+        container.innerHTML = '<p class="empty-state">Memuat...</p>';
+        try {
+            const snap = await getDocs(query(collection(db, 'news'), orderBy('createdAt', 'desc')));
+            if (snap.empty) {
+                container.innerHTML = '<p class="empty-state">Belum ada info/promo. Tambahkan di atas.</p>';
+                return;
+            }
+            container.innerHTML = '';
+            snap.forEach(docSnap => {
+                const n = docSnap.data();
+                const item = document.createElement('div');
+                item.className = 'news-item';
+                item.innerHTML = `
+                    <div class="ni-content">
+                        <span class="ni-date">${n.date || ''}</span>
+                        <h4>${escapeHtml(n.title || '')}</h4>
+                        <p>${escapeHtml(n.content || '')}</p>
+                    </div>
+                    <div class="ni-actions">
+                        <button class="btn-danger" data-id="${docSnap.id}">Hapus</button>
+                    </div>
+                `;
+                item.querySelector('.btn-danger').addEventListener('click', async () => {
+                    if (!confirm('Hapus info/promo ini?')) return;
+                    await deleteDoc(doc(db, 'news', docSnap.id));
+                    loadNewsAdmin();
+                });
+                container.appendChild(item);
+            });
+        } catch (err) {
+            container.innerHTML = '<p class="empty-state">Gagal memuat data.</p>';
+            console.error(err);
+        }
+    }
+
+    document.getElementById('addNewsBtn').addEventListener('click', async () => {
+        const title = document.getElementById('newsTitle').value.trim();
+        const date = document.getElementById('newsDate').value.trim();
+        const content = document.getElementById('newsContent').value.trim();
+        if (!title || !content) {
+            alert('Judul dan isi wajib diisi.');
+            return;
+        }
+        try {
+            await addDoc(collection(db, 'news'), {
+                title, date, content, createdAt: serverTimestamp()
+            });
+            document.getElementById('newsTitle').value = '';
+            document.getElementById('newsDate').value = '';
+            document.getElementById('newsContent').value = '';
+            loadNewsAdmin();
+        } catch (err) {
+            alert('Gagal menyimpan: ' + err.message);
+        }
+    });
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+</script>
+</body>
+</html>
