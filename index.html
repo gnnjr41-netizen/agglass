@@ -412,10 +412,10 @@
     <header class="header">
         <div class="container nav-container">
             <div class="logo">
-                <div class="logo-icon">AG</div>
+                <div class="logo-icon" id="siteLogoIcon"><span id="siteLogoLetters">AG</span><img id="siteLogoImg" src="" alt="Logo" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
                 <div class="logo-text">
-                    <h1>AG Glass</h1>
-                    <p>Solusi Kaca & Aluminium Premium</p>
+                    <h1 id="siteName1">AG Glass</h1>
+                    <p id="siteTagline1">Solusi Kaca & Aluminium Premium</p>
                 </div>
             </div>
             
@@ -440,12 +440,11 @@
                     <p>Kami menghadirkan solusi lengkap untuk kebutuhan kaca tempered, kusen aluminium, dan elemen arsitektur modern dengan standar kualitas terbaik dan garansi pemasangan.</p>
                     
                     <div class="hero-actions">
-                        <a href="https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20tentang%20kaca%20dan%20aluminium" 
-                           target="_blank" 
-                           class="cta-button whatsapp">
+                        <a href="#" target="_blank" 
+                           class="cta-button whatsapp js-wa-link" data-wa-text="Halo {NAMA}, saya ingin konsultasi tentang kaca dan aluminium">
                             <span>💬 Konsultasi via WhatsApp</span>
                         </a>
-                        <a href="tel:085288852792" class="cta-button">
+                        <a href="#" class="cta-button js-tel-link">
                             <span>📞 Telepon Sekarang</span>
                         </a>
                     </div>
@@ -473,6 +472,16 @@
                          id="heroImage">
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Info & Promo Section (diisi dari Admin, otomatis tersembunyi jika kosong) -->
+    <section id="newsSection" class="section" style="display:none; padding-top: 30px; padding-bottom: 30px;">
+        <div class="container">
+            <div class="section-title" style="margin-bottom: 24px;">
+                <h2>Info & Promo Terbaru</h2>
+            </div>
+            <div id="newsList" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;"></div>
         </div>
     </section>
 
@@ -572,7 +581,7 @@
                     <span class="counter-number">20+ proyek berkualitas</span> | Dapatkan inspirasi untuk proyek Anda
                 </div>
                 
-                <button class="view-all-btn" onclick="window.open('https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20lihat%20semua%20portfolio%20proyek', '_blank')">
+                <button class="view-all-btn" onclick="openWA('Halo {NAMA}, saya ingin lihat semua portfolio proyek')">
                     📞 Konsultasi Proyek Anda →
                 </button>
             </div>
@@ -698,17 +707,16 @@
                         <li>Penawaran Custom</li>
                         <li class="dll">dan layanan lain</li>
                     </ul>
-                    <button class="consult-btn" onclick="window.open('https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20proyek%20khusus', '_blank')">
+                    <button class="consult-btn" onclick="openWA('Halo {NAMA}, saya ingin konsultasi proyek khusus')">
                         Konsultasi Sekarang
                     </button>
                 </div>
             </div>
             
             <div style="text-align: center; margin-top: 30px;">
-                <p style="color: var(--muted); font-size: 0.9rem;">📍 <strong>Domisili Utama:</strong> Jawa Tengah</p>
-                <a href="https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah" 
+                <p style="color: var(--muted); font-size: 0.9rem;">📍 <strong>Domisili Utama:</strong> <span class="js-address-text">Jawa Tengah</span></p>
+                <a href="#" class="js-maps-link cta-button" 
                    target="_blank" 
-                   class="cta-button" 
                    style="margin-top: 10px; display: inline-flex; padding: 10px 20px; font-size: 0.9rem;">
                     <span>🗺️ Lihat Lokasi di Google Maps</span>
                 </a>
@@ -855,10 +863,9 @@
                             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 3.5h3l1.5 4-2 1.5a11 11 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.5 5.7 2 2 0 0 1 6.5 3.5z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
                             <div class="contact-info-content">
                                 <h4>Telepon & WhatsApp</h4>
-                                <a href="tel:085288852792">0852-8885-2792</a>
+                                <a href="#" class="js-tel-link js-tel-text">0852-8885-2792</a>
                                 <br>
-                                <a href="https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20tentang%20kaca%20dan%20aluminium" 
-                                   target="_blank">
+                                <a href="#" target="_blank" class="js-wa-link" data-wa-text="Halo {NAMA}, saya ingin konsultasi tentang kaca dan aluminium">
                                    💬 Chat via WhatsApp
                                 </a>
                             </div>
@@ -868,9 +875,8 @@
                             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.5s7-6.6 7-12A7 7 0 0 0 5 9.5c0 5.4 7 12 7 12z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" stroke="currentColor" stroke-width="1.6"/></svg></div>
                             <div class="contact-info-content">
                                 <h4>Lokasi & Area Layanan</h4>
-                                <p><strong>Domisili:</strong> Jawa Tengah</p>
-                                <a href="https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah" 
-                                   target="_blank">
+                                <p><strong>Domisili:</strong> <span class="js-address-text" id="contactAddressText">Jawa Tengah</span></p>
+                                <a href="#" target="_blank" class="js-maps-link">
                                    🗺️ Lihat di Google Maps
                                 </a>
                                 <p style="margin-top: 10px;"><strong>Melayani:</strong> Seluruh Indonesia</p>
@@ -881,7 +887,7 @@
                             <div class="contact-icon"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5" stroke="currentColor" stroke-width="1.6"/><path d="M4.5 6.5l7.5 6 7.5-6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
                             <div class="contact-info-content">
                                 <h4>Email</h4>
-                                <a href="mailto:agglass001@gmail.com">agglass001@gmail.com</a>
+                                <a href="#" class="js-email-link js-email-text">agglass001@gmail.com</a>
                                 <p style="margin-top: 5px; color: var(--muted); font-size: 0.9rem;">
                                     Untuk konsultasi detail & dokumen
                                 </p>
@@ -974,10 +980,10 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="logo" style="margin-bottom: 20px;">
-                        <div class="logo-icon">AG</div>
+                        <div class="logo-icon" id="siteLogoIcon2"><span id="siteLogoLetters2">AG</span><img id="siteLogoImg2" src="" alt="Logo" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
                         <div class="logo-text">
-                            <h1 style="color: white;">AG Glass</h1>
-                            <p style="color: rgba(255,255,255,0.8);">Solusi Kaca & Aluminium Premium</p>
+                            <h1 id="siteName2" style="color: white;">AG Glass</h1>
+                            <p id="siteTagline2" style="color: rgba(255,255,255,0.8);">Solusi Kaca & Aluminium Premium</p>
                         </div>
                     </div>
                     <p style="color: rgba(255,255,255,0.8); margin-bottom: 20px;">
@@ -985,7 +991,7 @@
                     </p>
                     <p style="color: rgba(255,255,255,0.8);">
                         <strong>Melayani:</strong> Seluruh Indonesia<br>
-                        <strong>Domisili:</strong> Jawa Tengah
+                        <strong>Domisili:</strong> <span class="js-address-text">Jawa Tengah</span>
                     </p>
                 </div>
                 
@@ -1003,10 +1009,10 @@
                 <div class="footer-col">
                     <h4>Kontak</h4>
                     <ul>
-                        <li>📞 <a href="tel:085288852792">0852-8885-2792</a></li>
-                        <li>💬 <a href="https://wa.me/6285288852792" target="_blank">WhatsApp</a></li>
-                        <li>📍 <a href="https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah" target="_blank">Jawa Tengah</a></li>
-                        <li>📧 <a href="mailto:agglass001@gmail.com">agglass001@gmail.com</a></li>
+                        <li>📞 <a href="#" class="js-tel-link js-tel-text">0852-8885-2792</a></li>
+                        <li>💬 <a href="#" class="js-wa-link" target="_blank">WhatsApp</a></li>
+                        <li>📍 <a href="#" target="_blank" class="js-maps-link js-address-text">Jawa Tengah</a></li>
+                        <li>📧 <a href="#" class="js-email-link js-email-text">agglass001@gmail.com</a></li>
                     </ul>
                 </div>
                 
@@ -1022,15 +1028,15 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2025 AG Glass. Semua hak dilindungi. | Melayani seluruh Indonesia</p>
+                <p>&copy; 2025 <span id="siteNameFooterCopy">AG Glass</span>. Semua hak dilindungi. | Melayani seluruh Indonesia</p>
             </div>
         </div>
     </footer>
 
     <!-- WhatsApp Float Button -->
-    <a href="https://wa.me/6285288852792?text=Halo%20AG%20Glass,%20saya%20ingin%20konsultasi%20tentang%20kaca%20dan%20aluminium" 
+    <a href="#" 
        target="_blank" 
-       class="whatsapp-float" 
+       class="whatsapp-float js-wa-link" data-wa-text="Halo {NAMA}, saya ingin konsultasi tentang kaca dan aluminium"
        aria-label="Chat via WhatsApp">
         <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M20.52 3.48A11.88 11.88 0 0 0 12 0C5.373 0 0 5.373 0 12c0 2.115.551 4.167 1.597 5.989L0 24l6.247-1.63A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12 0-1.876-.444-3.64-1.48-5.32z" fill="#fff"/>
@@ -1040,6 +1046,111 @@
 
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Konfigurasi Firebase (isi dengan config project Anda sendiri di firebase-config.js) -->
+    <script src="firebase-config.js"></script>
+
+    <!-- Ambil pengaturan (nama usaha, WA, email, alamat, logo, promo) dari Admin Panel -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+        import { getFirestore, doc, getDoc, collection, query, orderBy, getDocs } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+        const DEFAULT_CONFIG = {
+            businessName: 'AG Glass',
+            tagline: 'Solusi Kaca & Aluminium Premium',
+            whatsapp: '6285288852792',
+            phone: '085288852792',
+            email: 'agglass001@gmail.com',
+            address: 'Jawa Tengah',
+            mapsUrl: 'https://www.google.com/maps/place/Semarang,+Kota+Semarang,+Jawa+Tengah',
+            logoUrl: ''
+        };
+        window.SITE_CONFIG = DEFAULT_CONFIG;
+
+        function applySiteConfig(cfg) {
+            window.SITE_CONFIG = cfg;
+
+            ['siteName1', 'siteName2', 'siteNameFooterCopy'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = cfg.businessName;
+            });
+            ['siteTagline1', 'siteTagline2'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = cfg.tagline;
+            });
+
+            if (cfg.logoUrl) {
+                [['siteLogoImg', 'siteLogoLetters'], ['siteLogoImg2', 'siteLogoLetters2']].forEach(([imgId, letterId]) => {
+                    const img = document.getElementById(imgId);
+                    const letters = document.getElementById(letterId);
+                    if (img) { img.src = cfg.logoUrl; img.style.display = 'block'; }
+                    if (letters) letters.style.display = 'none';
+                });
+            }
+
+            document.querySelectorAll('.js-wa-link').forEach(el => {
+                const template = el.dataset.waText || '';
+                const text = template.replace(/\{NAMA\}/g, cfg.businessName);
+                el.href = `https://wa.me/${cfg.whatsapp}` + (text ? `?text=${encodeURIComponent(text)}` : '');
+            });
+
+            document.querySelectorAll('.js-tel-link').forEach(el => { el.href = `tel:${cfg.phone}`; });
+            document.querySelectorAll('.js-tel-text').forEach(el => { el.textContent = cfg.phone; });
+
+            document.querySelectorAll('.js-email-link').forEach(el => { el.href = `mailto:${cfg.email}`; });
+            document.querySelectorAll('.js-email-text').forEach(el => { el.textContent = cfg.email; });
+
+            document.querySelectorAll('.js-maps-link').forEach(el => { el.href = cfg.mapsUrl; });
+            document.querySelectorAll('.js-address-text').forEach(el => { el.textContent = cfg.address; });
+        }
+        window.applySiteConfig = applySiteConfig;
+        window.openWA = function(messageTemplate) {
+            const cfg = window.SITE_CONFIG || DEFAULT_CONFIG;
+            const text = (messageTemplate || '').replace(/\{NAMA\}/g, cfg.businessName);
+            window.open(`https://wa.me/${cfg.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
+        };
+        // Terapkan default dulu supaya link tidak kosong sebelum Firebase selesai dimuat
+        applySiteConfig(DEFAULT_CONFIG);
+
+        function renderNews(items) {
+            const list = document.getElementById('newsList');
+            const section = document.getElementById('newsSection');
+            if (!list || !section) return;
+            if (!items || items.length === 0) { section.style.display = 'none'; return; }
+            list.innerHTML = items.map(n => `
+                <div class="news-card">
+                    <span class="news-date">${n.date || ''}</span>
+                    <h3>${n.title || ''}</h3>
+                    <p>${(n.content || '').replace(/\n/g, '<br>')}</p>
+                </div>
+            `).join('');
+            section.style.display = 'block';
+        }
+
+        async function loadFromFirebase() {
+            try {
+                if (!window.FIREBASE_CONFIG || !window.FIREBASE_CONFIG.apiKey || window.FIREBASE_CONFIG.apiKey.includes('GANTI')) {
+                    // Firebase belum di-setup admin -> website tetap jalan normal pakai data default
+                    return;
+                }
+                const app = initializeApp(window.FIREBASE_CONFIG);
+                const db = getFirestore(app);
+
+                const cfgSnap = await getDoc(doc(db, 'siteSettings', 'config'));
+                const cfg = cfgSnap.exists() ? { ...DEFAULT_CONFIG, ...cfgSnap.data() } : DEFAULT_CONFIG;
+                applySiteConfig(cfg);
+
+                const newsSnap = await getDocs(query(collection(db, 'news'), orderBy('createdAt', 'desc')));
+                const items = [];
+                newsSnap.forEach(d => items.push(d.data()));
+                renderNews(items);
+            } catch (err) {
+                console.warn('Gagal memuat pengaturan dari Firebase, memakai default:', err);
+            }
+        }
+
+        loadFromFirebase();
+    </script>
 
     <script>
         // ============================
@@ -1299,8 +1410,8 @@
                                 confirmButtonColor: '#25D366'
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    const message = `Halo AG Glass, saya tertarik dengan proyek ${project.title} di ${project.location}. Bisa konsultasi untuk proyek serupa?`;
-                                    window.open(`https://wa.me/6285288852792?text=${encodeURIComponent(message)}`, '_blank');
+                                    const message = `Halo ${window.SITE_CONFIG.businessName}, saya tertarik dengan proyek ${project.title} di ${project.location}. Bisa konsultasi untuk proyek serupa?`;
+                                    window.open(`https://wa.me/${window.SITE_CONFIG.whatsapp}?text=${encodeURIComponent(message)}`, '_blank');
                                 }
                             });
                         });
@@ -1370,8 +1481,11 @@
             // dengan pesan sudah terisi otomatis, tinggal tekan kirim.
             // ============================
             const contactForm = document.getElementById('contactForm');
-            const WA_NUMBER = '6285288852792';
-            const EMAIL_TUJUAN = 'agglass001@gmail.com';
+            // Nomor WA & email diambil dari pengaturan Admin (window.SITE_CONFIG),
+            // dengan fallback default jika Firestore belum sempat dimuat.
+            function getWaNumber() { return (window.SITE_CONFIG && window.SITE_CONFIG.whatsapp) || '6285288852792'; }
+            function getEmailTujuan() { return (window.SITE_CONFIG && window.SITE_CONFIG.email) || 'agglass001@gmail.com'; }
+            function getBusinessName() { return (window.SITE_CONFIG && window.SITE_CONFIG.businessName) || 'AG Glass'; }
 
             function getFormValues() {
                 return {
@@ -1402,15 +1516,15 @@
                 const data = getFormValues();
                 if (!validateForm(data)) return;
 
-                const waText = `*FORM KONSULTASI AG GLASS*\n\n` +
+                const waText = `*FORM KONSULTASI ${getBusinessName().toUpperCase()}*\n\n` +
                                `*Nama:* ${data.name}\n` +
                                `*No. HP:* ${data.phone}\n` +
                                (data.email ? `*Email:* ${data.email}\n` : '') +
                                `*Layanan:* ${data.service}\n` +
                                `*Pesan:* ${data.message}\n\n` +
-                               `_Pesan ini dikirim via website AG Glass_`;
+                               `_Pesan ini dikirim via website ${getBusinessName()}_`;
 
-                const whatsappURL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(waText)}`;
+                const whatsappURL = `https://wa.me/${getWaNumber()}?text=${encodeURIComponent(waText)}`;
                 window.open(whatsappURL, '_blank');
 
                 Swal.fire({
@@ -1429,9 +1543,9 @@
                 const data = getFormValues();
                 if (!validateForm(data)) return;
 
-                const emailSubject = `Konsultasi AG Glass - ${data.name}`;
+                const emailSubject = `Konsultasi ${getBusinessName()} - ${data.name}`;
                 const emailBody =
-`Halo AG Glass,
+`Halo ${getBusinessName()},
 
 Saya ${data.name} tertarik dengan layanan: ${data.service}
 
@@ -1447,7 +1561,7 @@ Mohon info detail penawaran dan konsultasi lebih lanjut.
 Terima kasih,
 ${data.name}`;
 
-                const emailURL = `mailto:${EMAIL_TUJUAN}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+                const emailURL = `mailto:${getEmailTujuan()}?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = emailURL;
 
                 Swal.fire({
