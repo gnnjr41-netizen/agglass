@@ -744,7 +744,7 @@
                         <div class="author-avatar avatar-1">
                             <img src="images/client1.jpg" alt="Budi Santoso" 
                                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
-                                 onerror="this.style.display='none'; this.parentElement.innerHTML='BS'">
+                                 data-ext-idx="0" onerror="handleAvatarError(this, 'images/client1', 'BS')">
                         </div>
                         <div class="author-info">
                             <h4>Budi Santoso</h4>
@@ -773,7 +773,7 @@
                         <div class="author-avatar avatar-2">
                             <img src="images/client2.jpg" alt="Sari Rahmawati" 
                                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
-                                 onerror="this.style.display='none'; this.parentElement.innerHTML='SR'">
+                                 data-ext-idx="0" onerror="handleAvatarError(this, 'images/client2', 'SR')">
                         </div>
                         <div class="author-info">
                             <h4>Sari Rahmawati</h4>
@@ -802,7 +802,7 @@
                         <div class="author-avatar avatar-3">
                             <img src="images/client3.jpg" alt="Dedi Andrianto" 
                                  style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
-                                 onerror="this.style.display='none'; this.parentElement.innerHTML='DA'">
+                                 data-ext-idx="0" onerror="handleAvatarError(this, 'images/client3', 'DA')">
                         </div>
                         <div class="author-info">
                             <h4>Dedi Andrianto</h4>
@@ -1215,6 +1215,33 @@
             const galleryScroll = document.getElementById('galleryScroll');
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
+
+            // Coba beberapa ekstensi umum (.jpg/.jpeg/.png, huruf besar/kecil)
+            // supaya foto tetap muncul walau ekstensi upload tidak persis .jpg
+            const IMG_EXTENSIONS = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
+            function handleImageError(imgEl, basePath) {
+                let idx = parseInt(imgEl.dataset.extIdx || '0', 10);
+                idx++;
+                if (idx < IMG_EXTENSIONS.length) {
+                    imgEl.dataset.extIdx = idx;
+                    imgEl.src = `${basePath}.${IMG_EXTENSIONS[idx]}`;
+                } else {
+                    imgEl.style.display = 'none';
+                    if (imgEl.nextElementSibling) imgEl.nextElementSibling.style.display = 'flex';
+                }
+            }
+            window.handleImageError = handleImageError;
+            window.handleAvatarError = function(imgEl, basePath, initials) {
+                let idx = parseInt(imgEl.dataset.extIdx || '0', 10);
+                idx++;
+                if (idx < IMG_EXTENSIONS.length) {
+                    imgEl.dataset.extIdx = idx;
+                    imgEl.src = `${basePath}.${IMG_EXTENSIONS[idx]}`;
+                } else {
+                    imgEl.style.display = 'none';
+                    imgEl.parentElement.innerHTML = initials;
+                }
+            };
             
             // Generate gallery items dengan infinite effect
             function generateGalleryItems() {
@@ -1223,7 +1250,8 @@
                 // Buat 40 item (2 putaran) untuk infinite effect
                 for (let loop = 0; loop < 2; loop++) {
                     projects.forEach(project => {
-                        const projectImage = `images/project${project.number}.jpg`;
+                        const projectImageBase = `images/project${project.number}`;
+                        const projectImage = `${projectImageBase}.${IMG_EXTENSIONS[0]}`;
                         const projectAlt = `${project.title} - ${project.location}`;
                         
                         const galleryItem = document.createElement('div');
@@ -1233,7 +1261,8 @@
                             <img src="${projectImage}" 
                                  alt="${projectAlt}" 
                                  class="gallery-img-scroll"
-                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                 data-ext-idx="0"
+                                 onerror="handleImageError(this, '${projectImageBase}')">
                             <div class="gallery-img-placeholder">
                                 ${placeholderIconSvg}
                                 <span>Foto proyek segera hadir</span>
@@ -1463,14 +1492,21 @@ ${data.name}`;
                 }
             });
             
-            // Auto-update hero image if hero.jpg exists
+            // Auto-update hero image if hero.jpg/.jpeg/.png exists
             const heroImage = document.getElementById('heroImage');
-            const heroTest = new Image();
-            heroTest.src = 'images/hero.jpg';
-            heroTest.onload = function() {
-                heroImage.src = 'images/hero.jpg';
-                heroImage.alt = 'Gambar utama AG Glass';
-            };
+            (function tryHeroExtensions(i) {
+                if (i >= IMG_EXTENSIONS.length) return;
+                const candidate = `images/hero.${IMG_EXTENSIONS[i]}`;
+                const heroTest = new Image();
+                heroTest.src = candidate;
+                heroTest.onload = function() {
+                    heroImage.src = candidate;
+                    heroImage.alt = 'Gambar utama AG Glass';
+                };
+                heroTest.onerror = function() {
+                    tryHeroExtensions(i + 1);
+                };
+            })(0);
         });
     </script>
 </body>
