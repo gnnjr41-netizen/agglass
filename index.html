@@ -7,412 +7,47 @@
     <meta name="description" content="AG Glass menyediakan jasa kaca & aluminium profesional: pemasangan kaca tempered, kusen aluminium, kanopi, partisi kantor, dan service. Garansi rapi & cepat." />
     <meta name="keywords" content="kaca tempered, aluminium, kusen aluminium, pemasangan kaca, kanopi kaca, partisi kantor, AG Glass" />
     <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    <style>
-        /* Gallery Carousel Styles */
-        .gallery-scroll-container {
-            position: relative;
-            margin: 40px 0 20px 0;
-        }
-        
-        .gallery-scroll-wrapper {
-            position: relative;
-        }
-        
-        .gallery-scroll {
-            display: flex;
-            gap: 20px;
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            padding: 10px 5px 30px 5px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        
-        .gallery-scroll::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .gallery-item-scroll {
-            flex: 0 0 auto;
-            width: 320px;
-            height: 320px;
-            border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            background: linear-gradient(135deg, #f0f4ff, #e6eeff);
-        }
-        
-        .gallery-item-scroll:hover {
-            transform: translateY(-5px);
-        }
-        
-        .gallery-img-scroll {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .gallery-item-scroll:hover .gallery-img-scroll {
-            transform: scale(1.05);
-        }
-        
-        .gallery-overlay-scroll {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 20px;
-            color: white;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        
-        .gallery-item-scroll:hover .gallery-overlay-scroll {
-            transform: translateY(0);
-        }
-        
-        /* Navigation Buttons */
-        .scroll-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 50px;
-            height: 50px;
-            background: white;
-            border: none;
-            border-radius: 50%;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: all 0.3s ease;
-            font-size: 24px;
-            color: var(--secondary);
-        }
-        
-        .scroll-btn:hover {
-            background: var(--secondary);
-            color: white;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        .scroll-btn.prev {
-            left: -25px;
-        }
-        
-        .scroll-btn.next {
-            right: -25px;
-        }
-        
-        .scroll-btn.hidden {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-        
-        .scroll-btn.hidden:hover {
-            background: white;
-            color: var(--secondary);
-            transform: translateY(-50%);
-        }
-        
-        .scroll-indicator {
-            text-align: center;
-            margin-top: 10px;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        
-        .scroll-indicator span {
-            display: inline-block;
-            margin: 0 5px;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(10px); }
-        }
-        
-        /* Portfolio counter */
-        .portfolio-counter {
-            text-align: center;
-            margin-top: 10px;
-            color: var(--muted);
-            font-size: 0.9rem;
-        }
-        
-        .counter-number {
-            font-weight: bold;
-            color: var(--secondary);
-        }
-        
-        /* View All Button */
-        .view-all-btn {
-            display: block;
-            margin: 30px auto 0 auto;
-            padding: 12px 30px;
-            background: white;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            width: fit-content;
-        }
-        
-        .view-all-btn:hover {
-            background: var(--secondary);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-        }
-        
-        /* ============================================
-           AREA LAYANAN - 8 KOLOM KECIL (CSS Baru)
-           ============================================ */
-        
-        .coverage-grid-8 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 15px;
-            margin-top: 30px;
-        }
-        
-        .coverage-card-8 {
-            background: white;
-            border-radius: 10px;
-            padding: 20px 15px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: var(--transition);
-            border: 1px solid transparent;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-        
-        .coverage-card-8:hover {
-            transform: translateY(-3px);
-            border-color: var(--secondary);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-        }
-        
-        .coverage-card-8.highlight-area {
-            background: linear-gradient(135deg, #0b1226, #2563eb);
-            color: white;
-            border: none;
-        }
-        
-        .coverage-card-8.highlight-area h3,
-        .coverage-card-8.highlight-area p,
-        .coverage-card-8.highlight-area li {
-            color: white;
-        }
-        
-        .coverage-card-8 .icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .coverage-card-8 h3 {
-            color: var(--primary);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-        
-        .coverage-card-8 p {
-            color: var(--muted);
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            line-height: 1.4;
-        }
-        
-        .coverage-card-8 p strong {
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.9rem;
-        }
-        
-        .coverage-card-8.highlight-area p strong {
-            color: white;
-        }
-        
-        .area-list {
-            list-style: none;
-            padding: 0;
-            margin: 10px 0 15px 0;
-            text-align: center;
-            flex-grow: 1;
-        }
-        
-        .area-list li {
-            padding: 4px 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            color: var(--dark);
-            font-size: 0.8rem;
-        }
-        
-        .coverage-card-8.highlight-area .area-list li {
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            color: rgba(255,255,255,0.9);
-        }
-        
-        .area-list li.dll {
-            color: var(--secondary);
-            font-style: italic;
-            font-weight: 600;
-        }
-        
-        .consult-btn {
-            background: white;
-            color: var(--secondary);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 10px;
-            font-size: 0.8rem;
-            width: 100%;
-        }
-        
-        .consult-btn:hover {
-            background: #f0f4ff;
-            transform: translateY(-2px);
-        }
-        
-        /* Responsive untuk 8 kolom kecil */
-        @media (min-width: 1200px) {
-            .coverage-grid-8 {
-                grid-template-columns: repeat(4, 1fr);
+    <script>
+        // Ditaruh di <head> (dijalankan lebih dulu) supaya siap dipakai
+        // SEBELUM browser mulai memuat foto-foto <img> di halaman.
+        // Ini mencegah foto gagal muncul/nyangkut "rusak" akibat fungsi
+        // penanganannya belum ada saat gambar pertama kali dicoba dimuat.
+        window.IMG_EXTENSIONS = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
+        window.handleImageError = function(imgEl, basePath) {
+            let idx = parseInt(imgEl.dataset.extIdx || '0', 10);
+            idx++;
+            if (idx < window.IMG_EXTENSIONS.length) {
+                imgEl.dataset.extIdx = idx;
+                imgEl.src = `${basePath}.${window.IMG_EXTENSIONS[idx]}`;
+            } else {
+                imgEl.style.display = 'none';
+                if (imgEl.nextElementSibling) imgEl.nextElementSibling.style.display = 'flex';
             }
-        }
-        
-        @media (min-width: 768px) and (max-width: 1199px) {
-            .coverage-grid-8 {
-                grid-template-columns: repeat(2, 1fr);
+        };
+        window.handleAvatarError = function(imgEl, basePath, initials) {
+            let idx = parseInt(imgEl.dataset.extIdx || '0', 10);
+            idx++;
+            if (idx < window.IMG_EXTENSIONS.length) {
+                imgEl.dataset.extIdx = idx;
+                imgEl.src = `${basePath}.${window.IMG_EXTENSIONS[idx]}`;
+            } else {
+                imgEl.style.display = 'none';
+                imgEl.parentElement.innerHTML = initials;
             }
-        }
-        
-        @media (max-width: 767px) {
-            .coverage-grid-8 {
-                grid-template-columns: 1fr;
-                gap: 12px;
-            }
-            
-            .coverage-card-8 {
-                padding: 18px 12px;
-            }
-        }
-        
-        /* ============================================
-           PORTFOLIO PROFESSIONAL STYLING
-           ============================================ */
-        
-        .gallery-overlay-scroll h3 {
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        
-        .gallery-overlay-scroll p {
-            font-size: 0.85rem;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
-        
-        .project-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            color: white;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.7rem;
-            margin-top: 5px;
-        }
-        
-        /* Portfolio Stats */
-        .portfolio-stats {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-        
-        .stat-box {
-            text-align: center;
-            padding: 15px 25px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            min-width: 120px;
-        }
-        
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--secondary);
-            display: block;
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-top: 5px;
-        }
-        
-        @media (max-width: 768px) {
-            .gallery-scroll-wrapper {
-                padding: 0 20px;
-            }
-            
-            .scroll-btn {
-                display: none;
-            }
-            
-            .gallery-item-scroll {
-                width: 280px;
-                height: 280px;
-            }
-            
-            .portfolio-stats {
-                gap: 15px;
-            }
-            
-            .stat-box {
-                padding: 12px 15px;
-                min-width: 100px;
-            }
-            
-            .stat-number {
-                font-size: 1.5rem;
-            }
-        }
-    </style>
+        };
+    </script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container nav-container">
             <div class="logo">
-                <div class="logo-icon" id="siteLogoIcon"><span id="siteLogoLetters">AG</span><img id="siteLogoImg" src="" alt="Logo" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
+                <div class="logo-icon" id="siteLogoIcon"><span id="siteLogoLetters">AG</span><img id="siteLogoImg" src="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;" alt=""></div>
                 <div class="logo-text">
                     <h1 id="siteName1">AG Glass</h1>
                     <p id="siteTagline1">Solusi Kaca & Aluminium Premium</p>
@@ -750,8 +385,8 @@
                     
                     <div class="testimonial-author">
                         <div class="author-avatar avatar-1">
-                            <img src="images/client1.jpg" alt="Budi Santoso" 
-                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                            <img src="images/client1.jpg" 
+                                 alt="" style="position:absolute;inset:0;width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
                                  data-ext-idx="0" onerror="handleAvatarError(this, 'images/client1', 'BS')">
                         </div>
                         <div class="author-info">
@@ -779,8 +414,8 @@
                     
                     <div class="testimonial-author">
                         <div class="author-avatar avatar-2">
-                            <img src="images/client2.jpg" alt="Sari Rahmawati" 
-                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                            <img src="images/client2.jpg" 
+                                 alt="" style="position:absolute;inset:0;width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
                                  data-ext-idx="0" onerror="handleAvatarError(this, 'images/client2', 'SR')">
                         </div>
                         <div class="author-info">
@@ -808,8 +443,8 @@
                     
                     <div class="testimonial-author">
                         <div class="author-avatar avatar-3">
-                            <img src="images/client3.jpg" alt="Dedi Andrianto" 
-                                 style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
+                            <img src="images/client3.jpg" 
+                                 alt="" style="position:absolute;inset:0;width: 100%; height: 100%; object-fit: cover; border-radius: 50%;"
                                  data-ext-idx="0" onerror="handleAvatarError(this, 'images/client3', 'DA')">
                         </div>
                         <div class="author-info">
@@ -980,7 +615,7 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <div class="logo" style="margin-bottom: 20px;">
-                        <div class="logo-icon" id="siteLogoIcon2"><span id="siteLogoLetters2">AG</span><img id="siteLogoImg2" src="" alt="Logo" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:inherit;"></div>
+                        <div class="logo-icon" id="siteLogoIcon2"><span id="siteLogoLetters2">AG</span><img id="siteLogoImg2" src="" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;" alt=""></div>
                         <div class="logo-text">
                             <h1 id="siteName2" style="color: white;">AG Glass</h1>
                             <p id="siteTagline2" style="color: rgba(255,255,255,0.8);">Solusi Kaca & Aluminium Premium</p>
@@ -1083,8 +718,27 @@
                 [['siteLogoImg', 'siteLogoLetters'], ['siteLogoImg2', 'siteLogoLetters2']].forEach(([imgId, letterId]) => {
                     const img = document.getElementById(imgId);
                     const letters = document.getElementById(letterId);
-                    if (img) { img.src = cfg.logoUrl; img.style.display = 'block'; }
-                    if (letters) letters.style.display = 'none';
+                    if (!img) return;
+                    // Baru sembunyikan huruf "AG" & tampilkan gambar SETELAH
+                    // gambar benar-benar berhasil dimuat, supaya kalau link
+                    // logo salah/rusak, tampilan tidak jadi tumpang tindih.
+                    img.onload = () => {
+                        img.style.display = 'block';
+                        if (letters) letters.style.display = 'none';
+                    };
+                    img.onerror = () => {
+                        img.style.display = 'none';
+                        if (letters) letters.style.display = 'inline';
+                    };
+                    img.src = cfg.logoUrl;
+                });
+            } else {
+                // Tidak ada logoUrl -> pastikan gambar disembunyikan & huruf tampil
+                [['siteLogoImg', 'siteLogoLetters'], ['siteLogoImg2', 'siteLogoLetters2']].forEach(([imgId, letterId]) => {
+                    const img = document.getElementById(imgId);
+                    const letters = document.getElementById(letterId);
+                    if (img) img.style.display = 'none';
+                    if (letters) letters.style.display = 'inline';
                 });
             }
 
@@ -1327,33 +981,10 @@
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
 
-            // Coba beberapa ekstensi umum (.jpg/.jpeg/.png, huruf besar/kecil)
-            // supaya foto tetap muncul walau ekstensi upload tidak persis .jpg
-            const IMG_EXTENSIONS = ['jpg', 'jpeg', 'png', 'JPG', 'JPEG', 'PNG'];
-            function handleImageError(imgEl, basePath) {
-                let idx = parseInt(imgEl.dataset.extIdx || '0', 10);
-                idx++;
-                if (idx < IMG_EXTENSIONS.length) {
-                    imgEl.dataset.extIdx = idx;
-                    imgEl.src = `${basePath}.${IMG_EXTENSIONS[idx]}`;
-                } else {
-                    imgEl.style.display = 'none';
-                    if (imgEl.nextElementSibling) imgEl.nextElementSibling.style.display = 'flex';
-                }
-            }
-            window.handleImageError = handleImageError;
-            window.handleAvatarError = function(imgEl, basePath, initials) {
-                let idx = parseInt(imgEl.dataset.extIdx || '0', 10);
-                idx++;
-                if (idx < IMG_EXTENSIONS.length) {
-                    imgEl.dataset.extIdx = idx;
-                    imgEl.src = `${basePath}.${IMG_EXTENSIONS[idx]}`;
-                } else {
-                    imgEl.style.display = 'none';
-                    imgEl.parentElement.innerHTML = initials;
-                }
-            };
-            
+            // Ekstensi & fungsi handleImageError/handleAvatarError sudah
+            // didefinisikan lebih awal di <head> (lihat komentar di sana).
+            const IMG_EXTENSIONS = window.IMG_EXTENSIONS;
+
             // Generate gallery items dengan infinite effect
             function generateGalleryItems() {
                 galleryScroll.innerHTML = '';
