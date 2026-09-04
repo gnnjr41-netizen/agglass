@@ -75,6 +75,8 @@ a {
     color: white;
     font-weight: 800;
     font-size: 1.2rem;
+    overflow: hidden;
+    position: relative;
 }
 
 .logo-text h1 {
@@ -229,7 +231,7 @@ a {
 
 /* Sections */
 .section {
-    padding: 70px 0;
+    padding: 64px 0;
 }
 
 .section-title {
@@ -367,6 +369,8 @@ a {
     font-size: 1.2rem;
     color: white;
     flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
 }
 
 .avatar-1 {
