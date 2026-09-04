@@ -1285,3 +1285,32 @@ textarea.form-control {
 ::-webkit-scrollbar-thumb:hover {
     background: var(--accent);
 }
+/* ============================================
+   INFO & PROMO (dari Admin Panel)
+   ============================================ */
+.news-card {
+    background: white;
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border-left: 4px solid var(--secondary);
+}
+
+.news-card .news-date {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+    display: block;
+}
+
+.news-card h3 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.news-card p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+}
