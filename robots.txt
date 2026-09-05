@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gnnjr41-netizen.github.io/agglass/sitemap.xml
